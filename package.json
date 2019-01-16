@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/gloriaLVela/Naming_Contest#readme",
   "dependencies": {
+    "ejs": "^2.5.2",
     "express": "^4.16.4",
     "mongodb": "^2.2.10",
     "react": "^15.3.2",
