@@ -57,16 +57,17 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _testData = __webpack_require__(/*! ./testData */ 172);
+	
+	var _testData2 = _interopRequireDefault(_testData);
+	
 	var _App = __webpack_require__(/*! ./components/App */ 173);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_reactDom2.default.render(
-	// Component using a prop
-	// App headerMessage="This is a prop!" 
-	_react2.default.createElement(_App2.default, null), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, { contests: _testData2.default.contests }), document.getElementById('root'));
 
 /***/ },
 /* 1 */
@@ -21951,45 +21952,35 @@
 
 /***/ },
 /* 172 */
-/*!**********************************!*\
-  !*** ./src/components/Header.js ***!
-  \**********************************/
-/***/ function(module, exports, __webpack_require__) {
+/*!***************************!*\
+  !*** ./src/testData.json ***!
+  \***************************/
+/***/ function(module, exports) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// Header component
-	var Header = function Header(_ref) {
-	  var message = _ref.message;
-	
-	  return _react2.default.createElement(
-	    'h2',
-	    { className: 'Header text-center' },
-	    message
-	  );
+	module.exports = {
+		"contests": [
+			{
+				"id": 1,
+				"categoryName": "Business/Company",
+				"contestName": "Cognitive Building Bricks"
+			},
+			{
+				"id": 2,
+				"categoryName": "Magazine/Newsletter",
+				"contestName": "Educating people about sustainable food production"
+			},
+			{
+				"id": 3,
+				"categoryName": "Software Component",
+				"contestName": "Big Data Analytics for Cash Circulation"
+			},
+			{
+				"id": 4,
+				"categoryName": "Website",
+				"contestName": "Free programming books"
+			}
+		]
 	};
-	
-	// Prop type validation
-	Header.propTypes = {
-	  message: _react2.default.PropTypes.string
-	};
-	
-	// Default message
-	Header.defaultProps = {
-	  message: 'Hello React Component default value!!'
-	};
-	
-	exports.default = Header;
 
 /***/ },
 /* 173 */
@@ -22010,9 +22001,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Header = __webpack_require__(/*! ./Header */ 172);
+	var _Header = __webpack_require__(/*! ./Header */ 174);
 	
 	var _Header2 = _interopRequireDefault(_Header);
+	
+	var _ContestPreview = __webpack_require__(/*! ./ContestPreview */ 175);
+	
+	var _ContestPreview2 = _interopRequireDefault(_ContestPreview);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22058,14 +22053,19 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'App' },
-	        _react2.default.createElement(_Header2.default, { message: this.state.pageHeader }),
+	      return (
+	        //  Use map to display the list of contests
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          '...'
+	          { className: 'App' },
+	          _react2.default.createElement(_Header2.default, { message: this.state.pageHeader }),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            this.props.contests.map(function (contest) {
+	              return _react2.default.createElement(_ContestPreview2.default, contest);
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -22075,6 +22075,86 @@
 	}(_react2.default.Component);
 	
 	exports.default = App;
+
+/***/ },
+/* 174 */
+/*!**********************************!*\
+  !*** ./src/components/Header.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// Header component
+	var Header = function Header(_ref) {
+	  var message = _ref.message;
+	
+	  return _react2.default.createElement(
+	    'h2',
+	    { className: 'Header text-center' },
+	    message
+	  );
+	};
+	
+	// Prop type validation
+	Header.propTypes = {
+	  message: _react2.default.PropTypes.string
+	};
+	
+	// Default message
+	Header.defaultProps = {
+	  message: 'Hello React Component default value!!'
+	};
+	
+	exports.default = Header;
+
+/***/ },
+/* 175 */
+/*!******************************************!*\
+  !*** ./src/components/ContestPreview.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContestPreview = function ContestPreview(contest) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "ContestPreview" },
+	    _react2.default.createElement(
+	      "div",
+	      { className: "category-name" },
+	      contest.categoryName
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { className: "contest-name" },
+	      contest.contestName
+	    )
+	  );
+	};
+	
+	exports.default = ContestPreview;
 
 /***/ }
 /******/ ]);

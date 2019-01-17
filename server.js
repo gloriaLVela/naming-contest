@@ -1,9 +1,16 @@
 import config from './config';
 import apiRouter from './api';
+import sassMiddleware from 'node-sass-middleware';
+import path from 'path';
 
 import express from 'express';
 const server = express();
 
+// Use sass
+server.use(sassMiddleware({
+  src: path.join(__dirname, 'sass'),
+  dest: path.join(__dirname, 'public')
+}));
 
 // Front end will be using EJS in the view folder
 server.set('view engine', 'ejs');
