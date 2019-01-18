@@ -15,6 +15,9 @@ server.use(sassMiddleware({
 // Front end will be using EJS in the view folder
 server.set('view engine', 'ejs');
 
+
+import './serverRender';
+
 server.get('/', (req, res) => {
   //res.send('Hello Express');
   res.render('index', {
@@ -25,6 +28,6 @@ server.get('/', (req, res) => {
 server.use('/api', apiRouter);
 server.use(express.static('public'));
 
-server.listen(config.port, () => {
+server.listen(config.port, config.host, () => {
   console.info('Express listening on port', config.port);
 });
