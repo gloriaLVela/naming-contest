@@ -16,13 +16,18 @@ server.use(sassMiddleware({
 server.set('view engine', 'ejs');
 
 
-import './serverRender';
+import serverRender from './serverRender';
 
+// Use serverRender to fetch data from the server
 server.get('/', (req, res) => {
-  //res.send('Hello Express');
-  res.render('index', {
-    content: 'Hello Express and <em>EJS!</em>'
-  });
+  serverRender()
+    .then(content => {
+      res.render('index', {
+        content
+      });
+    })
+    .catch(console.error);
+  
 });
 
 server.use('/api', apiRouter);
