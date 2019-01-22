@@ -23,3 +23,5 @@ package_*
 package-*
 
 .gitignore
+
+/public/bundle.js*
