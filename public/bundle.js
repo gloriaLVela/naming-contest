@@ -22026,8 +22026,7 @@
 	          'div',
 	          { className: 'App' },
 	          _react2.default.createElement(_Header2.default, { message: this.state.pageHeader }),
-	          _react2.default.createElement(_ContestList2.default, { contests: this.state.contests }),
-	          '>'
+	          _react2.default.createElement(_ContestList2.default, { contests: this.state.contests })
 	        )
 	      );
 	    }
@@ -22157,7 +22156,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        "div",
-	        { className: "ContestPreview", onClick: this.handleClick },
+	        { className: "link ContestPreview", onClick: this.handleClick },
 	        _react2.default.createElement(
 	          "div",
 	          { className: "category-name" },

@@ -27,7 +27,7 @@ class App extends React.Component{
     // Provide the key 
     <div className="App" >
       <Header message={this.state.pageHeader} />
-      <ContestList contests ={this.state.contests} />>
+      <ContestList contests ={this.state.contests} />
     </div>   
   );
   } 
