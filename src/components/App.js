@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Header from './Header';
-import ContestPreview from './ContestPreview';
+import ContestList from './ContestList';
 
 
 // Top level component
@@ -27,12 +27,7 @@ class App extends React.Component{
     // Provide the key 
     <div className="App" >
       <Header message={this.state.pageHeader} />
-      <div>
-      
-      {this.state.contests.map(contest => 
-        <ContestPreview key={contest.id} {...contest} />)}
-        
-      </div>
+      <ContestList contests ={this.state.contests} />
     </div>   
   );
   } 
