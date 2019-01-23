@@ -16,7 +16,7 @@ const serverRender = () =>
         // Read the react code and render it to string
       return {
         initialMarkup: ReactDOMServer.renderToString(
-          <App initialContests={resp.data.contests} />),
+          <App initialData={resp.data} />),
         initialData:resp.data        
       };
     });
