@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'; 
 
 
 class ContestPreview extends Component {
@@ -19,7 +20,7 @@ class ContestPreview extends Component {
   }
 }
 
-ContestPreview.propTypes = {
+ContestPreview.PropTypes = {
   id: React.PropTypes.number.isRequired,
   categoryName: React.PropTypes.string.isRequired,
   contestName: React.PropTypes.string.isRequired,

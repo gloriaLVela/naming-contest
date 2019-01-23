@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from './Header';
 import ContestList from './ContestList';
+import Contest from './Contest';
 
 
 // App.js is the top level component
@@ -25,12 +26,30 @@ class App extends React.Component{
   componentWillUnmount(){
       // clean timers, listeners
   }
+
   fetchContest = (contestId) => {
     pushState (
       { currentContestId: contestId},
       `/contest/${contestId}`
     );
+    // Lookup contest
+    this.setState({
+      pageHeader: this.state.contests[contestId].contestName,
+      currentContestId: contestId
+    });
   };
+  
+  currentContent() {
+    // Check if there isn only one contest
+    if( this.state.currentContestId){ 
+      return <Contest {...this.state.contests[this.state.currentContestId]} />;
+    }
+    else {
+      return <ContestList 
+       onContestClick = {this.fetchContest} 
+       contests ={this.state.contests} />;
+    }
+  }
 
   render(){
     return (
@@ -38,9 +57,7 @@ class App extends React.Component{
     // Provide the key 
     <div className="App" >
       <Header message={this.state.pageHeader} />
-      <ContestList 
-       onContestClick = {this.fetchContest} 
-       contests ={this.state.contests} />
+      {this.currentContent()}
     </div>   
   );
   } 

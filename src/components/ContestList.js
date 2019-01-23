@@ -1,21 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types'; 
 import ContestPreview from './ContestPreview';
 
 const ContestList = ({ contests, onContestClick }) => {
   return (
         <div>
-        {contests.map(contest => 
+        {Object.keys(contests).map(contestId => 
             <ContestPreview 
-            key={contest.id} 
+            key={contestId} 
             onClick={onContestClick}
-            {...contest} />
+            {...contests[contestId]} />
         )}
         </div>
-    );
+  );
 };
 
-ContestList.propTypes = {
-  contests: React.PropTypes.array,
+ContestList.PropTypes = {
+  contests: React.PropTypes.object,
   onContestClick: React.PropTypes.func.isRequired
 };
 
