@@ -63,7 +63,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, { initialContests: window.initialData.contests }), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, { initialData: window.initialData }), document.getElementById('root'));
 
 /***/ }),
 /* 1 */
@@ -22422,6 +22422,10 @@
 	
 	var _Contest2 = _interopRequireDefault(_Contest);
 	
+	var _propTypes = __webpack_require__(/*! prop-types */ 189);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
 	var _api = __webpack_require__(/*! ../api */ 191);
 	
 	var api = _interopRequireWildcard(_api);
@@ -22460,10 +22464,7 @@
 	      args[_key] = arguments[_key];
 	    }
 	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-	      pageHeader: 'Naming Contests',
-	      contests: _this.props.initialContests
-	    }, _this.fetchContest = function (contestId) {
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = _this.props.initialData, _this.fetchContest = function (contestId) {
 	      pushState({ currentContestId: contestId }, '/contest/' + contestId);
 	      // Lookup contest
 	      api.fetchContest(contestId).then(function (contest) {
@@ -22489,11 +22490,24 @@
 	      // clean timers, listeners
 	    }
 	  }, {
+	    key: 'pageHeader',
+	    value: function pageHeader() {
+	      if (this.state.currentContestId) {
+	        return this.currentContest().contestName;
+	      }
+	      return 'Naming Contests';
+	    }
+	  }, {
+	    key: 'currentContest',
+	    value: function currentContest() {
+	      return this.state.contests[this.state.currentContestId];
+	    }
+	  }, {
 	    key: 'currentContent',
 	    value: function currentContent() {
 	      // Check if there isn only one contest
 	      if (this.state.currentContestId) {
-	        return _react2.default.createElement(_Contest2.default, this.state.contests[this.state.currentContestId]);
+	        return _react2.default.createElement(_Contest2.default, this.currentContest());
 	      } else {
 	        return _react2.default.createElement(_ContestList2.default, {
 	          onContestClick: this.fetchContest,
@@ -22509,7 +22523,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'App' },
-	          _react2.default.createElement(_Header2.default, { message: this.state.pageHeader }),
+	          _react2.default.createElement(_Header2.default, { message: this.pageHeader() }),
 	          this.currentContent()
 	        )
 	      );
@@ -22519,6 +22533,9 @@
 	  return App;
 	}(_react2.default.Component);
 	
+	App.propTypes = {
+	  initialData: _propTypes2.default.object.isRequired
+	};
 	exports.default = App;
 
 /***/ }),

@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header';
 import ContestList from './ContestList';
 import Contest from './Contest';
+import PropTypes from 'prop-types';
 import * as api from '../api';
 
 
@@ -14,10 +15,10 @@ const pushState = (obj, url) =>
 
 // Component definition
 class App extends React.Component{
-  state = {
-    pageHeader: 'Naming Contests',
-    contests: this.props.initialContests
+  static propTypes = {
+    initialData: PropTypes.object.isRequired
   }
+  state = this.props.initialData;
   componentDidMount(){
     // Set the contest data
     // ajax fetching
@@ -47,10 +48,19 @@ class App extends React.Component{
     
   };
   
+  pageHeader(){
+    if (this.state.currentContestId) {
+      return this.currentContest().contestName;
+    }
+    return 'Naming Contests';
+  }
+  currentContest() {
+    return this.state.contests[this.state.currentContestId];
+  }
   currentContent() {
     // Check if there isn only one contest
     if( this.state.currentContestId){ 
-      return <Contest {...this.state.contests[this.state.currentContestId]} />;
+      return <Contest {...this.currentContest()} />;
     }
     else {
       return <ContestList 
@@ -64,7 +74,7 @@ class App extends React.Component{
     //  Use map to display the list of contests
     // Provide the key 
     <div className="App" >
-      <Header message={this.state.pageHeader} />
+      <Header message={this.pageHeader()} />
       {this.currentContent()}
     </div>   
   );
