@@ -22448,6 +22448,10 @@
 	  return window.history.pushState(obj, '', url);
 	};
 	
+	var onPopState = function onPopState(handler) {
+	  window.onpopstate = handler;
+	};
+	
 	// Component definition
 	
 	var App = function (_React$Component) {
@@ -22480,14 +22484,24 @@
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      // Set the contest data
 	      // ajax fetching
-	      // implement timers, listeners
+	      // implement timers, list(event)
+	
+	      // Handle the browsers back button
+	      onPopState(function (event) {
+	        _this2.setState({
+	          currentContestId: (event.state || {}).currentContestId
+	        });
+	      });
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      // clean timers, listeners
+	      onPopState(null);
 	    }
 	  }, {
 	    key: 'pageHeader',

@@ -12,6 +12,9 @@ import * as api from '../api';
 const pushState = (obj, url) =>
   window.history.pushState(obj, '', url);
 
+const onPopState = handler => {
+  window.onpopstate = handler;
+};
 
 // Component definition
 class App extends React.Component{
@@ -22,11 +25,19 @@ class App extends React.Component{
   componentDidMount(){
     // Set the contest data
     // ajax fetching
-    // implement timers, listeners
+    // implement timers, list(event)
+
+    // Handle the browsers back button
+    onPopState((event) => {
+      this.setState ({
+        currentContestId: (event.state || {}).currentContestId
+      });
+    });
   }
 
   componentWillUnmount(){
-      // clean timers, listeners
+     // clean timers, listeners
+    onPopState(null);
   }
 
   fetchContest = (contestId) => {
