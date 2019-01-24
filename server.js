@@ -19,8 +19,8 @@ server.set('view engine', 'ejs');
 import serverRender from './serverRender';
 
 // Use serverRender to fetch data from the server
-server.get('/', (req, res) => {
-  serverRender()
+server.get(['/', '/contest/:contestId'],(req, res) => {
+  serverRender(req.params.ContestId)
     .then(({initialMarkup, initialData} ) => {
       res.render('index', {
         initialMarkup,
