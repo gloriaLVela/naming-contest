@@ -8,5 +8,8 @@ npm install
 npm run dev
 npm start
 
-#Install mongo db
-npminstall --save mongodb
+# Load test data
+babel-node loadTestData.js
+
+# Test if the database port is in use
+sudo lsof -iTCP -sTCP:LISTEN -n -P
