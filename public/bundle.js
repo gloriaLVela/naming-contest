@@ -22569,6 +22569,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _propTypes = __webpack_require__(/*! prop-types */ 187);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// Header component
@@ -22584,7 +22588,7 @@
 	
 	// Prop type validation
 	Header.propTypes = {
-	  message: _react2.default.PropTypes.string
+	  message: _propTypes2.default.string
 	};
 	
 	// Default message
@@ -22640,8 +22644,8 @@
 	};
 	
 	ContestList.PropTypes = {
-	  contests: _react2.default.PropTypes.object,
-	  onContestClick: _react2.default.PropTypes.func.isRequired
+	  contests: _propTypes2.default.object,
+	  onContestClick: _propTypes2.default.func.isRequired
 	};
 	
 	exports.default = ContestList;
@@ -22819,10 +22823,10 @@
 	}(_react.Component);
 	
 	ContestPreview.PropTypes = {
-	  id: _react2.default.PropTypes.number.isRequired,
-	  categoryName: _react2.default.PropTypes.string.isRequired,
-	  contestName: _react2.default.PropTypes.string.isRequired,
-	  onClick: _react2.default.PropTypes.func.isRequired
+	  id: _propTypes2.default.number.isRequired,
+	  categoryName: _propTypes2.default.string.isRequired,
+	  contestName: _propTypes2.default.string.isRequired,
+	  onClick: _propTypes2.default.func.isRequired
 	};
 	
 	exports.default = ContestPreview;
@@ -22834,7 +22838,7 @@
   \***********************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22845,10 +22849,6 @@
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(/*! prop-types */ 187);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22868,12 +22868,105 @@
 	  }
 	
 	  _createClass(Contest, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'Contest' },
-	        this.props.description
+	        "div",
+	        { className: "Contest" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "panel panel-default" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "panel-heading" },
+	            _react2.default.createElement(
+	              "h3",
+	              { className: "panel-title" },
+	              "Contest Description"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "panel-body" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "contest-description" },
+	              this.props.description
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "panel panel-default" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "panel-heading" },
+	            _react2.default.createElement(
+	              "h3",
+	              { className: "panel-title" },
+	              "Proposed Names"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "panel-body" },
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "list-group" },
+	              _react2.default.createElement(
+	                "li",
+	                { className: "list-group-item" },
+	                "Name one..."
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                { className: "list-group-item" },
+	                "Name two..."
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "panel panel-info" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "panel-heading" },
+	            _react2.default.createElement(
+	              "h3",
+	              { className: "panel-title" },
+	              "Propose a New Name"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "panel-body" },
+	            _react2.default.createElement(
+	              "form",
+	              null,
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("input", { type: "text", placeholder: "New Name Here...", className: "form-control" }),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    { type: "submit", className: "btn btn-info" },
+	                    "Sumbit"
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "home-link link",
+	            onClick: this.props.contestListClick },
+	          "Contest List"
+	        )
 	      );
 	    }
 	  }]);
@@ -22881,8 +22974,9 @@
 	  return Contest;
 	}(_react.Component);
 	
-	Contest.PropTypes = {
-	  description: _propTypes2.default.string.isRequired
+	Contest.propTypes = {
+	  description: _react.PropTypes.string.isRequired,
+	  contestListClick: _react.PropTypes.func.isRequired
 	};
 	
 	exports.default = Contest;

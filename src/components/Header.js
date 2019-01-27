@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Header component
 const Header = ({ message }) => {
@@ -11,7 +12,7 @@ const Header = ({ message }) => {
   
 // Prop type validation
 Header.propTypes = {
-  message: React.PropTypes.string
+  message: PropTypes.string
 };
 
 // Default message
