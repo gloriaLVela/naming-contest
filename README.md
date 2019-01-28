@@ -14,4 +14,7 @@ babel-node loadTestData.js
 # Test if the database port is in use
 sudo lsof -iTCP -sTCP:LISTEN -n -P
 
+#update test data to use _id
+babel-node updateTestData.js
+
 #mongo
