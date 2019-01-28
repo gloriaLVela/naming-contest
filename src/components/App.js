@@ -58,26 +58,64 @@ class App extends React.Component{
     });
     
   };
+
+  fetchContestList = () => {
+    pushState(
+      { currentContestId: null },
+      '/'
+    );
+    api.fetchContestList().then(contests => {
+      this.setState({
+        currentContestId: null,
+        contests
+      });
+    });
+  };
+
+  fetchNames = (nameIds) => {
+    if (nameIds.length === 0) {
+      return;
+    }
+    api.fetchNames(nameIds).then(names => {
+      // return the names object
+      this.setState({
+        names
+      });
+    });
+  };
   
+  currentContest() {
+    return this.state.contests[this.state.currentContestId];
+  }
+    
   pageHeader(){
     if (this.state.currentContestId) {
       return this.currentContest().contestName;
     }
     return 'Naming Contests';
   }
-  currentContest() {
-    return this.state.contests[this.state.currentContestId];
-  }
+  
+  lookupName = (nameId) => {
+    if (!this.state.names || !this.state.names[nameId]) {
+      return {
+        name: '...'
+      };
+    }
+    return this.state.names[nameId];
+  };
+
   currentContent() {
-    // Check if there isn only one contest
-    if( this.state.currentContestId){ 
-      return <Contest {...this.currentContest()} />;
+    if (this.state.currentContestId) {
+      return <Contest
+               contestListClick={this.fetchContestList}
+               fetchNames={this.fetchNames}
+               lookupName={this.lookupName}
+               {...this.currentContest()} />;
     }
-    else {
-      return <ContestList 
-       onContestClick = {this.fetchContest} 
-       contests ={this.state.contests} />;
-    }
+
+    return <ContestList
+            onContestClick={this.fetchContest}
+            contests={this.state.contests} />;
   }
 
   render(){
