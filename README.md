@@ -13,3 +13,5 @@ babel-node loadTestData.js
 
 # Test if the database port is in use
 sudo lsof -iTCP -sTCP:LISTEN -n -P
+
+#mongo
