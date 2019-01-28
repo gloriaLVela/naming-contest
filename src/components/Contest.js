@@ -1,6 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 
 class Contest extends Component {
+  componentDidMount() {
+    // Fetch the names after mounting the Constest component
+    // Instruct React to go back to an API and fetch the list of names. 
+    // The app component is going to pass a fetch names function
+    // The fetchNames is in the App component because we want to keep the state there.
+    this.props.fetchNames(this.props.nameIds);
+  }
   render() {
     return (
       <div className="Contest">
@@ -21,8 +28,11 @@ class Contest extends Component {
           </div>
           <div className="panel-body">
             <ul className="list-group">
-              <li className="list-group-item">Name one...</li>
-              <li className="list-group-item">Name two...</li>
+            {this.props.nameIds.map(nameId =>
+              <li key={nameId} className="list-group-item">
+                {this.props.lookupName(nameId).name}
+              </li>
+            )}
             </ul>
           </div>
         </div>
@@ -55,6 +65,9 @@ class Contest extends Component {
 Contest.propTypes = {
   description: PropTypes.string.isRequired,
   contestListClick: PropTypes.func.isRequired,
+  fetchNames: PropTypes.func.isRequired,
+  nameIds: PropTypes.array.isRequired,
+  lookupName: PropTypes.func.isRequired
 };
 
 export default Contest;

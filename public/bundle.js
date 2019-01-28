@@ -22478,6 +22478,31 @@
 	          contests: _extends({}, _this.state.contests, _defineProperty({}, contest.id, contest))
 	        });
 	      });
+	    }, _this.fetchContestList = function () {
+	      pushState({ currentContestId: null }, '/');
+	      api.fetchContestList().then(function (contests) {
+	        _this.setState({
+	          currentContestId: null,
+	          contests: contests
+	        });
+	      });
+	    }, _this.fetchNames = function (nameIds) {
+	      if (nameIds.length === 0) {
+	        return;
+	      }
+	      api.fetchNames(nameIds).then(function (names) {
+	        // return the names object
+	        _this.setState({
+	          names: names
+	        });
+	      });
+	    }, _this.lookupName = function (nameId) {
+	      if (!_this.state.names || !_this.state.names[nameId]) {
+	        return {
+	          name: '...'
+	        };
+	      }
+	      return _this.state.names[nameId];
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 	
@@ -22504,6 +22529,11 @@
 	      onPopState(null);
 	    }
 	  }, {
+	    key: 'currentContest',
+	    value: function currentContest() {
+	      return this.state.contests[this.state.currentContestId];
+	    }
+	  }, {
 	    key: 'pageHeader',
 	    value: function pageHeader() {
 	      if (this.state.currentContestId) {
@@ -22512,21 +22542,19 @@
 	      return 'Naming Contests';
 	    }
 	  }, {
-	    key: 'currentContest',
-	    value: function currentContest() {
-	      return this.state.contests[this.state.currentContestId];
-	    }
-	  }, {
 	    key: 'currentContent',
 	    value: function currentContent() {
-	      // Check if there isn only one contest
 	      if (this.state.currentContestId) {
-	        return _react2.default.createElement(_Contest2.default, this.currentContest());
-	      } else {
-	        return _react2.default.createElement(_ContestList2.default, {
-	          onContestClick: this.fetchContest,
-	          contests: this.state.contests });
+	        return _react2.default.createElement(_Contest2.default, _extends({
+	          contestListClick: this.fetchContestList,
+	          fetchNames: this.fetchNames,
+	          lookupName: this.lookupName
+	        }, this.currentContest()));
 	      }
+	
+	      return _react2.default.createElement(_ContestList2.default, {
+	        onContestClick: this.fetchContest,
+	        contests: this.state.contests });
 	    }
 	  }, {
 	    key: 'render',
@@ -22868,8 +22896,19 @@
 	  }
 	
 	  _createClass(Contest, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      // Fetch the names after mounting the Constest component
+	      // Instruct React to go back to an API and fetch the list of names. 
+	      // The app component is going to pass a fetch names function
+	      // The fetchNames is in the App component because we want to keep the state there.
+	      this.props.fetchNames(this.props.nameIds);
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _this2 = this;
+	
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "Contest" },
@@ -22913,16 +22952,13 @@
 	            _react2.default.createElement(
 	              "ul",
 	              { className: "list-group" },
-	              _react2.default.createElement(
-	                "li",
-	                { className: "list-group-item" },
-	                "Name one..."
-	              ),
-	              _react2.default.createElement(
-	                "li",
-	                { className: "list-group-item" },
-	                "Name two..."
-	              )
+	              this.props.nameIds.map(function (nameId) {
+	                return _react2.default.createElement(
+	                  "li",
+	                  { key: nameId, className: "list-group-item" },
+	                  _this2.props.lookupName(nameId).name
+	                );
+	              })
 	            )
 	          )
 	        ),
@@ -22976,7 +23012,10 @@
 	
 	Contest.propTypes = {
 	  description: _react.PropTypes.string.isRequired,
-	  contestListClick: _react.PropTypes.func.isRequired
+	  contestListClick: _react.PropTypes.func.isRequired,
+	  fetchNames: _react.PropTypes.func.isRequired,
+	  nameIds: _react.PropTypes.array.isRequired,
+	  lookupName: _react.PropTypes.func.isRequired
 	};
 	
 	exports.default = Contest;
@@ -22993,7 +23032,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.fetchContest = undefined;
+	exports.fetchNames = exports.fetchContestList = exports.fetchContest = undefined;
 	
 	var _axios = __webpack_require__(/*! axios */ 192);
 	
@@ -23005,6 +23044,21 @@
 	var fetchContest = exports.fetchContest = function fetchContest(contestId) {
 	  return _axios2.default.get('/api/contests/' + contestId).then(function (resp) {
 	    return resp.data;
+	  });
+	}; // Axios is a lightweight HTTP client based similar to a Fetch API. 
+	// Axios is promise-based async/await library for the readable asynchronous code. 
+	// We can easily integrate with React.js, and it is effortless to use in any frontend framework. ... 
+	// It has a very brief intro about React and Redux.
+	
+	var fetchContestList = exports.fetchContestList = function fetchContestList() {
+	  return _axios2.default.get('/api/contests').then(function (resp) {
+	    return resp.data.contests;
+	  });
+	};
+	
+	var fetchNames = exports.fetchNames = function fetchNames(nameIds) {
+	  return _axios2.default.get('/api/names/' + nameIds.join(',')).then(function (resp) {
+	    return resp.data.names;
 	  });
 	};
 
