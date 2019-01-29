@@ -22414,7 +22414,7 @@
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _ContestList = __webpack_require__(/*! ./ContestList */ 186);
+	var _ContestList = __webpack_require__(/*! ./ContestList */ 188);
 	
 	var _ContestList2 = _interopRequireDefault(_ContestList);
 	
@@ -22422,7 +22422,7 @@
 	
 	var _Contest2 = _interopRequireDefault(_Contest);
 	
-	var _propTypes = __webpack_require__(/*! prop-types */ 187);
+	var _propTypes = __webpack_require__(/*! prop-types */ 186);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
@@ -22474,8 +22474,8 @@
 	      api.fetchContest(contestId).then(function (contest) {
 	        _this.setState({
 	          pageHeader: contest.contestName,
-	          currentContestId: contest.id,
-	          contests: _extends({}, _this.state.contests, _defineProperty({}, contest.id, contest))
+	          currentContestId: contest._id,
+	          contests: _extends({}, _this.state.contests, _defineProperty({}, contest._id, contest))
 	        });
 	      });
 	    }, _this.fetchContestList = function () {
@@ -22597,7 +22597,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(/*! prop-types */ 187);
+	var _propTypes = __webpack_require__(/*! prop-types */ 186);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
@@ -22628,58 +22628,6 @@
 
 /***/ }),
 /* 186 */
-/*!***************************************!*\
-  !*** ./src/components/ContestList.js ***!
-  \***************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(/*! prop-types */ 187);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _ContestPreview = __webpack_require__(/*! ./ContestPreview */ 189);
-	
-	var _ContestPreview2 = _interopRequireDefault(_ContestPreview);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ContestList = function ContestList(_ref) {
-	  var contests = _ref.contests,
-	      onContestClick = _ref.onContestClick;
-	
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    Object.keys(contests).map(function (contestId) {
-	      return _react2.default.createElement(_ContestPreview2.default, _extends({
-	        key: contestId,
-	        onClick: onContestClick
-	      }, contests[contestId]));
-	    })
-	  );
-	};
-	
-	ContestList.PropTypes = {
-	  contests: _propTypes2.default.object,
-	  onContestClick: _propTypes2.default.func.isRequired
-	};
-	
-	exports.default = ContestList;
-
-/***/ }),
-/* 187 */
 /*!*******************************!*\
   !*** ./~/prop-types/index.js ***!
   \*******************************/
@@ -22710,12 +22658,12 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(/*! ./factoryWithThrowingShims */ 188)();
+	  module.exports = __webpack_require__(/*! ./factoryWithThrowingShims */ 187)();
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../process/browser.js */ 3)))
 
 /***/ }),
-/* 188 */
+/* 187 */
 /*!**************************************************!*\
   !*** ./~/prop-types/factoryWithThrowingShims.js ***!
   \**************************************************/
@@ -22778,6 +22726,58 @@
 	};
 
 /***/ }),
+/* 188 */
+/*!***************************************!*\
+  !*** ./src/components/ContestList.js ***!
+  \***************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(/*! prop-types */ 186);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _ContestPreview = __webpack_require__(/*! ./ContestPreview */ 189);
+	
+	var _ContestPreview2 = _interopRequireDefault(_ContestPreview);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContestList = function ContestList(_ref) {
+	  var contests = _ref.contests,
+	      onContestClick = _ref.onContestClick;
+	
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    Object.keys(contests).map(function (contestId) {
+	      return _react2.default.createElement(_ContestPreview2.default, _extends({
+	        key: contestId,
+	        onClick: onContestClick
+	      }, contests[contestId]));
+	    })
+	  );
+	};
+	
+	ContestList.PropTypes = {
+	  contests: _propTypes2.default.object,
+	  onContestClick: _propTypes2.default.func.isRequired
+	};
+	
+	exports.default = ContestList;
+
+/***/ }),
 /* 189 */
 /*!******************************************!*\
   !*** ./src/components/ContestPreview.js ***!
@@ -22796,7 +22796,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(/*! prop-types */ 187);
+	var _propTypes = __webpack_require__(/*! prop-types */ 186);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
@@ -22823,7 +22823,7 @@
 	    }
 	
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ContestPreview.__proto__ || Object.getPrototypeOf(ContestPreview)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function () {
-	      _this.props.onClick(_this.props.id);
+	      _this.props.onClick(_this.props._id);
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 	
@@ -22851,7 +22851,7 @@
 	}(_react.Component);
 	
 	ContestPreview.PropTypes = {
-	  id: _propTypes2.default.number.isRequired,
+	  _id: _propTypes2.default.string.isRequired,
 	  categoryName: _propTypes2.default.string.isRequired,
 	  contestName: _propTypes2.default.string.isRequired,
 	  onClick: _propTypes2.default.func.isRequired

@@ -15,7 +15,6 @@ server.use(sassMiddleware({
 // Front end will be using EJS in the view folder
 server.set('view engine', 'ejs');
 
-
 import serverRender from './serverRender';
 
 // Use serverRender to fetch data from the server
@@ -27,7 +26,10 @@ server.get(['/', '/contest/:contestId'],(req, res) => {
         initialData
       });
     })
-    .catch(console.error);
+    .catch(error => {
+      console.log(error);
+      res.status(404).send('Bad Request');
+    });
   
 });
 
