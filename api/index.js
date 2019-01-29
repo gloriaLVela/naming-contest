@@ -3,6 +3,9 @@ import { MongoClient, ObjectID } from 'mongodb';
 import assert from 'assert';
 import config from '../config';
 
+// Includes the API endpoints
+
+// Connect to the mongo database
 let mdb;
 MongoClient.connect(config.mongodbUri, (err, db) => {
   assert.equal(null, err);
@@ -10,8 +13,12 @@ MongoClient.connect(config.mongodbUri, (err, db) => {
   mdb = db;
 });
 
+// A route method is derived from one of the HTTP methods, and is attached to an instance of the express class.
 const router = express.Router();
 
+// There is a special routing method, app.all(), used to load middleware functions at a path for all HTTP request methods. 
+// For example, the following handler is executed for requests to the route “/contests” whether using GET, POST, PUT, DELETE, 
+// or any other HTTP request method supported in the http module.
 router.get('/contests', (req, res) => {
   let contests = {};
   mdb.collection('contests').find({})
@@ -60,6 +67,31 @@ router.get('/contests/:contestId', (req, res) => {
      .findOne({ _id: ObjectID(req.params.contestId) })
      .then(contest => res.send(contest))
      .catch(console.error);
+});
+
+router.post('/names', (req, res) => {
+  const contestId = ObjectID(req.body.contestId);
+  const name = req.body.newName;
+  // validation ...
+  mdb.collection('names').insertOne({ name }).then(result =>
+    mdb.collection('contests').findAndModify(
+      // Find the contest by id
+      { _id: contestId },
+      [],
+      { $push: { nameIds: result.insertedId } },
+      { new: true }
+    ).then(doc =>
+      // Respond with the data
+      res.send({
+        updatedContest: doc.value,
+        newName: { _id: result.insertedId, name }
+      })
+    )
+  )
+  .catch(error => {
+    console.error(error);
+    res.status(404).send('Bad Request');
+  });
 });
 
 export default router;

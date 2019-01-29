@@ -2,9 +2,11 @@ import config from './config';
 import apiRouter from './api';
 import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
-
 import express from 'express';
+import bodyParser from 'body-parser';
+
 const server = express();
+server.use(bodyParser.json());
 
 // Use sass
 server.use(sassMiddleware({
