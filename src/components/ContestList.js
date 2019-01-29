@@ -4,7 +4,7 @@ import ContestPreview from './ContestPreview';
 
 const ContestList = ({ contests, onContestClick }) => {
   return (
-        <div>
+        <div  >
         {Object.keys(contests).map(contestId => 
             <ContestPreview 
             key={contestId} 

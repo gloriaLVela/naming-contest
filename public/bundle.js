@@ -22503,6 +22503,13 @@
 	        };
 	      }
 	      return _this.state.names[nameId];
+	    }, _this.addName = function (newName, contestId) {
+	      api.addName(newName, contestId).then(function (resp) {
+	        return _this.setState({
+	          contests: _extends({}, _this.state.contests, _defineProperty({}, resp.updatedContest._id, resp.updatedContest)),
+	          names: _extends({}, _this.state.names, _defineProperty({}, resp.newName._id, resp.newName))
+	        });
+	      }).catch(console.error);
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 	
@@ -22548,7 +22555,8 @@
 	        return _react2.default.createElement(_Contest2.default, _extends({
 	          contestListClick: this.fetchContestList,
 	          fetchNames: this.fetchNames,
-	          lookupName: this.lookupName
+	          lookupName: this.lookupName,
+	          addName: this.addName
 	        }, this.currentContest()));
 	      }
 	
@@ -22894,9 +22902,27 @@
 	  _inherits(Contest, _Component);
 	
 	  function Contest() {
+	    var _ref;
+	
+	    var _temp, _this, _ret;
+	
 	    _classCallCheck(this, Contest);
 	
-	    return _possibleConstructorReturn(this, (Contest.__proto__ || Object.getPrototypeOf(Contest)).apply(this, arguments));
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Contest.__proto__ || Object.getPrototypeOf(Contest)).call.apply(_ref, [this].concat(args))), _this), _this.handleSubmit = function (event) {
+	      event.preventDefault();
+	      // Read the value the user typed
+	      if (_this.refs.newNameInput.value.length > 0) {
+	        _this.props.addName(_this.refs.newNameInput.value, _this.props._id);
+	        // Clear the new name field
+	        _this.refs.newNameInput.value = '';
+	      }
+	      //console.log('Error ');
+	      return;
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 	
 	  _createClass(Contest, [{
@@ -22940,7 +22966,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'panel panel-default' },
+	          { className: 'panel panel-default ContestList' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'panel-heading' },
@@ -22952,7 +22978,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'panel-body' },
+	            { className: 'panel-body ' },
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'list-group' },
@@ -22983,11 +23009,14 @@
 	            { className: 'panel-body' },
 	            _react2.default.createElement(
 	              'form',
-	              null,
+	              { onSubmit: this.handleSubmit },
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'input-group' },
-	                _react2.default.createElement('input', { type: 'text', placeholder: 'New Name Here...', className: 'form-control' }),
+	                _react2.default.createElement('input', { type: 'text',
+	                  placeholder: 'New Name Here...',
+	                  ref: 'newNameInput',
+	                  className: 'form-control' }),
 	                _react2.default.createElement(
 	                  'span',
 	                  { className: 'input-group-btn' },
@@ -23015,11 +23044,13 @@
 	}(_react.Component);
 	
 	Contest.propTypes = {
+	  _id: _propTypes2.default.string.isRequired,
 	  description: _propTypes2.default.string.isRequired,
 	  contestListClick: _propTypes2.default.func.isRequired,
 	  fetchNames: _propTypes2.default.func.isRequired,
 	  nameIds: _propTypes2.default.array.isRequired,
-	  lookupName: _propTypes2.default.func.isRequired
+	  lookupName: _propTypes2.default.func.isRequired,
+	  addName: _propTypes2.default.func.isRequired
 	};
 	
 	exports.default = Contest;
@@ -23036,7 +23067,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.fetchNames = exports.fetchContestList = exports.fetchContest = undefined;
+	exports.addName = exports.fetchNames = exports.fetchContestList = exports.fetchContest = undefined;
 	
 	var _axios = __webpack_require__(/*! axios */ 192);
 	
@@ -23063,6 +23094,13 @@
 	var fetchNames = exports.fetchNames = function fetchNames(nameIds) {
 	  return _axios2.default.get('/api/names/' + nameIds.join(',')).then(function (resp) {
 	    return resp.data.names;
+	  });
+	};
+	
+	// Define an API for this addName, so we definitely want to export that as well. 
+	var addName = exports.addName = function addName(newName, contestId) {
+	  return _axios2.default.post('/api/names', { newName: newName, contestId: contestId }).then(function (resp) {
+	    return resp.data;
 	  });
 	};
 

@@ -10,6 +10,8 @@ import App from './src/components/App';
 import config from './config';
 import axios from 'axios';
 
+
+// Define the API url
 const getApiUrl = contestId => {
   if (contestId) {
     return `${config.serverUrl}/api/contests/${contestId}`;
