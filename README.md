@@ -6,6 +6,8 @@ npm install
 # create bundle.js
 
 npm run dev
+
+
 npm start
 
 # Load test data
