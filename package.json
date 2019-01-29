@@ -20,6 +20,7 @@
   "homepage": "https://github.com/gloriaLVela/Naming_Contest#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "ejs": "^2.5.2",
     "express": "^4.16.4",
     "json-loader": "^0.5.4",
