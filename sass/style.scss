@@ -20,5 +20,21 @@
 
 .ContestList {
   max-height: '50';
+  //overflow-y: 'auto';
+}
+
+#myDivScrollbar ::-webkit-scrollbar{
+  background-color: #F5F5F5;
+  float: left;
   overflow-y: 'auto';
+}
+
+.scrollbar {
+  background-color: blue;
+  max-height: 100px;
+  overflow-y: 'auto';
+}
+
+.force-overflow {
+  min-height: 200px;
 }

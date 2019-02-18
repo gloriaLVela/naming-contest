@@ -22978,7 +22978,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'panel-body ' },
+	            { className: 'panel-body' },
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'list-group' },

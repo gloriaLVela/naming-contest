@@ -36,10 +36,10 @@ class Contest extends Component {
         </div>
 
         <div className="panel panel-default ContestList">
-          <div className="panel-heading">
+          <div className="panel-heading" >
             <h3 className="panel-title">Proposed Names</h3>
           </div>
-          <div className="panel-body ">
+          <div className="panel-body">
             <ul className="list-group">
             {this.props.nameIds.map(nameId =>
               <li key={nameId} className="list-group-item">
